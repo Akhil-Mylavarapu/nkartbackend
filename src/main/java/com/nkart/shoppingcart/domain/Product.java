@@ -54,6 +54,14 @@ public class Product {
 	@Transient
 	private MultipartFile image;
 
+	public MultipartFile getImage() {
+		return image;
+	}
+
+	public void setImage(MultipartFile image) {
+		this.image = image;
+	}
+
 	public int getId() {
 		return id;
 	}

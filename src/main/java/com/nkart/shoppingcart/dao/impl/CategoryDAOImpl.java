@@ -86,7 +86,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}*/
 
 	public boolean deleteCategory(Category category) {
-		Category category1 = null;
+		
 		try {
 			/*if (category.getId() != null)
 				category1 = getCategoryById(category.getId());
