@@ -1,4 +1,4 @@
-package com.nkart.shoppincart.testcase;
+/*package com.nkart.shoppincart.testcase;
 
 import static org.junit.Assert.assertEquals;
 
@@ -52,4 +52,4 @@ public class CartTestCase
 		
 	}
 
-}
+}*/
