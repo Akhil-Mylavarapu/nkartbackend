@@ -15,6 +15,7 @@ public class Cart {
 	@GeneratedValue
 	private int id;
 	private int productid;
+	//@Column(name="user_id")
 	private int userid;
 	private String productname;
 	@Column(columnDefinition = "Integer default 1")
