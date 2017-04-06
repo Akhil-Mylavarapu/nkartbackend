@@ -2,11 +2,12 @@ package com.nkart.shoppingcart.dao.impl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nkart.shoppingcart.dao.ProductDAO;
 import com.nkart.shoppingcart.domain.Product;
@@ -77,6 +78,23 @@ public class ProductDAOImpl implements ProductDAO
 
 	public Product getProductByName(int name) {
 		return (Product) sessionFactory.getCurrentSession().createQuery("from Product where name='"+name+"'").list().get(0);
+	}
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public List<Product> getproduct(int id) {
+		String hql="from Product where id= "+id;
+		@SuppressWarnings("rawtypes")
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		List<Product> listProduct = (List<Product>) query.list();
+		return listProduct;
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Transactional
+	public List<Product> navproduct(int id) {
+		String hql = "from Product where categoryid= "+id;
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		List<Product> catproducts = (List<Product>) query.list();
+		return catproducts;
 	}
 
 }
