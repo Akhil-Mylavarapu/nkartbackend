@@ -27,5 +27,5 @@ public interface CartDAO {
 
 	public long CartPrice(int userId);
 
-	public void pay(int userId);
+	public void pay(int userid);
 }

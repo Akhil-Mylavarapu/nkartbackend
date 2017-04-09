@@ -6,6 +6,8 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,18 +17,17 @@ import com.nkart.shoppingcart.domain.Category;
 @Transactional
 @Repository("categoryDAO")
 public class CategoryDAOImpl implements CategoryDAO {
+	private static Logger log = LoggerFactory.getLogger(CategoryDAOImpl.class);
 
 	@Autowired
 
 	private SessionFactory sessionFactory;
-	
-	private Session getSession()
-	{
+
+	private Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
 
-	public CategoryDAOImpl(SessionFactory sessionFactory)
-	{
+	public CategoryDAOImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 
@@ -37,15 +38,16 @@ public class CategoryDAOImpl implements CategoryDAO {
 		// from Category --HQL --mention domain class name not table name
 
 		// convert the hibernate query into db specific language
-
+		log.debug("Ending of category list in IMPL");
 		return getSession().createQuery("from Category").list();
 
 	}
 
 	public boolean createCategory(Category category) {
 		try {
-			
+			log.debug("Strating of category save in IMPL");
 			getSession().save(category);
+			log.debug("Ending of category save in IMPL");
 			return true;
 		}
 
@@ -55,16 +57,12 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 		}
 	}
+
 	public boolean updateCategory(Category category) {
 		try {
-//			if (category.getId() != null)
-//				category1 = getCategoryById(category.getId());
-//			else if (category.getName() != null)
-//				category1 = getCategoryByName(category.getName());
-			
-			System.err.println("Getting the Category: "+category);
+			log.debug("Starting of category update in IMPL");
 			getSession().update(category);
-
+			log.debug("Ending of category update in IMPL");
 			return true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -72,31 +70,17 @@ public class CategoryDAOImpl implements CategoryDAO {
 			return false;
 		}
 	}
-	/*public boolean updateCategory(Category category) {
-
-		try {
-			getSession().update(category);
-			return true;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-
-	}*/
+	
 
 	public boolean deleteCategory(Category category) {
-		
-		try {
-			/*if (category.getId() != null)
-				category1 = getCategoryById(category.getId());
-			else if (category.getName() != null)
-				category1 = getCategoryByName(category.getName());*/
-			getSession().delete(category);
 
+		try {
+			log.debug("Starting of category delete in IMPL");
+			getSession().delete(category);
+			log.debug("Ending of category delete in IMPL");
 			return true;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			return false;
 		}
@@ -108,7 +92,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 			getSession().delete(getCategoryByName(name));
 			return true;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			return false;
 		}
@@ -136,80 +120,16 @@ public class CategoryDAOImpl implements CategoryDAO {
 		// return (Category)
 		// sessioFactory.getCurrentSession.get(Category.class,id);
 
-		return (Category) getSession().createQuery("from Category where id = '" + id + "'")
-				.uniqueResult();
+		return (Category) getSession().createQuery("from Category where id = '" + id + "'").uniqueResult();
 	}
 
 	public Category getCategoryByName(String name) {
 		// unique result will only work for primary key and unique values
 		// select * from Category where name=...
 
-		return (Category) getSession().createQuery("from Category where name= '" + name + "'")
-				.list().get(0);
+		return (Category) getSession().createQuery("from Category where name= '" + name + "'").list().get(0);
 
 	}
 }
 
-	/*@Autowired
-	SessionFactory sessionFactory;
-	public static final Logger log = LoggerFactory.getLogger(CategoryDAOImpl.class);
-    public CategoryDAOImpl(SessionFactory  sessionFactory) {
-    this.sessionFactory=sessionFactory;
-}
 
-	@Transactional
-	public boolean save(Category category) {
-		try {
-			log.info("category start:");
-			sessionFactory.getCurrentSession().saveOrUpdate(category);
-			log.info("category saved:");
-			return true;
-			
-		} catch (HibernateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		
-	}
-
-	
-	@Transactional
-	public boolean delete(int id) {
-		Category CategoryToDelete = new Category();
-		CategoryToDelete.setId(id);
-		 sessionFactory.getCurrentSession().delete(CategoryToDelete);
-		 return true;
-	}
-	
-		
-		@Transactional
-		public Category get(int id) {
-			String hql = "from"+" Category"+" where id=" + id;
-		
-			@SuppressWarnings("rawtypes")
-			Query query = sessionFactory.getCurrentSession().createQuery(hql);
-			
-			@SuppressWarnings({ "unchecked", "deprecation" })
-			List<Category> listCategory = (List<Category>) query.list();
-			
-			if (listCategory != null && !listCategory.isEmpty()) {
-				return listCategory.get(0);
-			}
-			
-			return null;
-		}
-
-	
-	@Transactional
-	public List<Category> list() {
-		@SuppressWarnings({ "unchecked", "deprecation" })
-		List<Category> listCategory = (List<Category>) sessionFactory.getCurrentSession()
-				.createCriteria(Category.class)
-				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-
-		return listCategory;
-	}
-
-	
-}*/

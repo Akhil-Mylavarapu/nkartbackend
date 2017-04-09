@@ -5,6 +5,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,7 @@ import com.nkart.shoppingcart.domain.User;
 @Transactional
 @Repository("userDAO")
 public class UserDAOImpl implements UserDAO {
+	private static Logger log=LoggerFactory.getLogger(UserDAOImpl.class);
 	@Autowired
 	private SessionFactory sessionFactory;
 
