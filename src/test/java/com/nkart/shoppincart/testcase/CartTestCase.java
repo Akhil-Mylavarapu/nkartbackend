@@ -1,4 +1,4 @@
-/*package com.nkart.shoppincart.testcase;
+package com.nkart.shoppincart.testcase;
 
 import static org.junit.Assert.assertEquals;
 
@@ -35,13 +35,13 @@ public class CartTestCase
 	@Test
 	public void createCartTestCase()
 	{
-		cart.setProductName("");
+		cart.setProductname("");
 		cart.setPrice(10000);
 		cart.setQuantity(1);
 		
-		cart.setUserID("");
+		cart.setUserid(10);
 		
-	boolean flag = cartDAO.saveCart(cart);
+	boolean flag = cartDAO.saveorupdate(cart);
 		
 		System.out.println("Done");
 		
@@ -52,4 +52,4 @@ public class CartTestCase
 		
 	}
 
-}*/
+}
