@@ -66,7 +66,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@Transactional
 	public User getUserByName(String name) {
-		return (User) sessionFactory.getCurrentSession().createQuery("from User where name='" + name + "'").list().get(0);
+		return (User) sessionFactory.getCurrentSession().createQuery("from User where name=:parameter0").setParameter(":parameter0", name).list().get(0);
 	}
 	@Transactional
 	public User validate(String id, String password)
