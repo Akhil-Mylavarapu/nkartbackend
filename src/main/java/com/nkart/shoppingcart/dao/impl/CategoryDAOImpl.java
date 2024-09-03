@@ -127,7 +127,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 		// unique result will only work for primary key and unique values
 		// select * from Category where name=...
 
-		return (Category) getSession().createQuery("from Category where name= '" + name + "'").list().get(0);
+		return (Category) getSession().createQuery("from Category where name= :parameter0").setParameter(":parameter0", name).list().get(0);
 
 	}
 }
