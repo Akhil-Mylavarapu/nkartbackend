@@ -66,14 +66,14 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@Transactional
 	public User getUserByName(String name) {
-		return (User) sessionFactory.getCurrentSession().createQuery("from User where name='" + name + "'").list().get(0);
+		return (User) sessionFactory.getCurrentSession().createQuery("from User where name=:parameter0").setParameter("parameter0", name).list().get(0);
 	}
 	@Transactional
 	public User validate(String id, String password)
 	{
 		// select * from User where id='' and password=''
-		String hql="from User where id='"+id+"' and password ='"+password+"'";
-		if(sessionFactory.getCurrentSession().createQuery(hql).uniqueResult()==null)
+		String hql="from User where id=:parameter0"+" and password =:parameter1";
+		if(sessionFactory.getCurrentSession().createQuery(hql).setParameter("parameter0", id).setParameter("parameter1", password).uniqueResult()==null)
 			{
 			return null;
 			}
